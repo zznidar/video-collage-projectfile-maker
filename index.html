@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+	<meta name="author" content="Žan Žnidar">
+	<title>Video collage projectfile maker</title>
+	<meta name="description" content="Create .fcpxml timeline projectfiles for video collages which you can then losslessly import into DaVinci Resolve and edit further!">
+</head> 
+    
+<body>
+    <label for="inputfile">Choose a .fcpxml file of your timeline:</label>
+    <input type="file" id="inputpicker" name="inputfile" accept=".fcpxml">
+
+    <!-- Write instructions on how to use it -->
+    
+    <script src="ui.js"></script>
+    <script src="fcpxml-importer.js"></script>
+    <script src="collage-maker.js"></script>
+    <script src="fcpxml-exporter.js"></script>
+</body>
+</html>
