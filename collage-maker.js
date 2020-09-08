@@ -87,7 +87,7 @@ function linear_partition(seq, k) {
 
 
 
-multifakator = 1; // Should mosaic be too high, reduce multifakator and run again. 
+multifakator = 1; // Should mosaic be too high, automatically reduce multifakator and run again. 
 
 // https://stackoverflow.com/questions/31712363/linear-partitioning-perfect-image-gallery
 function make(p) {
@@ -168,11 +168,6 @@ function make(p) {
             console.log("Position posX: ", posX = (100 * iks / (projectHeight / (1920) * img["width"] / newScale * scale))); // We do some deep dark magic with a special formula which visually makes no sense but works
             console.log("Position posY: ", posY = (100 * ipsilon / projectHeight));
             
-            nekitest = out[0]?.scale.split(" ")[0] || newScale*0.75;
-            console.log("nekitest: ", nekitest);
-            console.log("nov posY: ", (parseInt(posY*0.75)+parseInt(nekitest)));
-
-        //    out.push({"name": img["name"], "scale": (newScale*0.75 + " " + newScale*0.75), "position": (posX*0.75 + " " + (parseInt(10) + parseInt(posY*0.75)))}); // We can multiply all values by something to scale the whole thing. But after that, we may want to move it up a bit ...            
             out.push({"name": img["name"], "scale": (newScale + " " + newScale), "position": (posX + " " + posY)});
         
             preview.insertAdjacentHTML("beforeend", '<div style="border: 5px solid pink; width: '+img["width"]*scale+'px; height: '+img["height"]*scale+'px; position: relative; float: left; box-sizing: border-box"></div>');
@@ -198,6 +193,7 @@ function make(p) {
     console.log("out: ", out);
 
     if(ohsumChecker > projectHeight && multifakator === 1) {
+        // The mosaic came out too high to fit on the screen. Scale-to-fit it down and align to center in the upcoming run
         console.warn("Uh-oh, the mosaic is too high. We will scale it down and re-run it.", ohsumChecker, projectHeight);
         multifakator = Math.floor(projectHeight / ohsumChecker * 10000000)/10000000;
         ohsum = 0;
