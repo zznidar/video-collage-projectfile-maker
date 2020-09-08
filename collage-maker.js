@@ -119,7 +119,7 @@ function make(p) {
         return sum += img['aspect-ratio'] * ideal_height;
     }, 0);
     var rows = Math.round( summed_width / viewport );
-    rows = 3;
+    //rows = 3;
 
     var weights = photos.map(function (img) {
         return parseInt(img['aspect-ratio'] * 100);
