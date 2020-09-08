@@ -87,6 +87,7 @@ function linear_partition(seq, k) {
 
 
 
+multifakator = 1; // Should mosaic be too high, reduce multifakator and run again. 
 
 // https://stackoverflow.com/questions/31712363/linear-partitioning-perfect-image-gallery
 function make(p) {
@@ -101,6 +102,7 @@ function make(p) {
     out = []; // array of objects for each clip with data ready to be written into DaVinci Resolve xml file
     ohsum = 0; // summing height for positioning
     owsum = 0; // summing width to know when to go to a new line
+    ohsumChecker = 0; // same as above, but we add to it on start of each line; used to check if mosaic is too high
 
     for (slika of p)
     {
@@ -117,6 +119,7 @@ function make(p) {
         return sum += img['aspect-ratio'] * ideal_height;
     }, 0);
     var rows = Math.round( summed_width / viewport );
+    rows = 3;
 
     var weights = photos.map(function (img) {
         return parseInt(img['aspect-ratio'] * 100);
@@ -153,19 +156,34 @@ function make(p) {
             // coordinates x and y as if origin were top-left, going towards down-right
             console.log("Position X: ", x = (owsum + newWidth/2));
             console.log("Position Y: ", y = (ohsum + newHeight/2));
+            
+            scale = multifakator*scale; newScale = multifakator*newScale; x = multifakator*x; y = multifakator*y;
 
             // but DaVinci Resolve has origin in the middle, going towards up-right
-            console.log("Position iks: ", iks = (x - projectWidth/2));
+            console.log("Position iks: ", iks = (x - multifakator*projectWidth/2));
             console.log("Position ipsilon: ", ipsilon = (projectHeight/2 - y));
 
             // furthermore, DaVinci Resolve uses positions as percent based on projectHeight. That means, if projectHeight = 1080 and you set position in xml to "-100 100", the result will be -1080, 1080 (i. e. 1080 pixels left, 1080 pixels up)
             //console.log("Position posX: ", posX = (100 * iks / projectHeight)); // For some reason, posX for vertical videos is wrong. (iks is okay -- same as in DaVinci program. But this percentage value as in XML file is wrong. Very wrong. Weird.)
-            console.log("Position posX: ", posX = (100 * iks / (projectHeight / 1920 * img["width"] / newScale * scale))); // We do some deep dark magic with a special formula which visually makes no sense but works
+            console.log("Position posX: ", posX = (100 * iks / (projectHeight / (1920) * img["width"] / newScale * scale))); // We do some deep dark magic with a special formula which visually makes no sense but works
             console.log("Position posY: ", posY = (100 * ipsilon / projectHeight));
+            
+            nekitest = out[0]?.scale.split(" ")[0] || newScale*0.75;
+            console.log("nekitest: ", nekitest);
+            console.log("nov posY: ", (parseInt(posY*0.75)+parseInt(nekitest)));
 
+        //    out.push({"name": img["name"], "scale": (newScale*0.75 + " " + newScale*0.75), "position": (posX*0.75 + " " + (parseInt(10) + parseInt(posY*0.75)))}); // We can multiply all values by something to scale the whole thing. But after that, we may want to move it up a bit ...            
             out.push({"name": img["name"], "scale": (newScale + " " + newScale), "position": (posX + " " + posY)});
+        
+            preview.insertAdjacentHTML("beforeend", '<div style="border: 5px solid pink; width: '+img["width"]*scale+'px; height: '+img["height"]*scale+'px; position: relative; float: left; box-sizing: border-box"></div>');
+        
+            preview2.insertAdjacentHTML("beforeend", '<div style="border: 5px solid #'+Math.min(999999, (Math.round(Math.random()*1000000)+"111111").slice(0,6))+'; box-sizing: border-box; width: '+(img["width"]*scale)+'px;height: '+(img["height"]*scale)+'px;position: absolute; top: '+(1080/2-img["height"]*scale/2)+'px; left: '+(1920/2-img["width"]*scale/2)+'px;transform: translate('+(iks)+'px, '+(0-ipsilon)+'px);"></div>');
 
-            owsum += newWidth;
+            if(owsum == 0) { // we do this here to see if mosaic becomes too high
+                ohsumChecker += newHeight;
+            }
+        
+            owsum += (newWidth);
             console.log(owsum, ohsum);
 
             // We check if end of line is reached AFTER pushing so we can add current video height to ohsum
@@ -176,7 +194,23 @@ function make(p) {
 
         }
     }
-    
-    console.groupEnd();
-    return(out);
+
+    console.log("out: ", out);
+
+    if(ohsumChecker > projectHeight && multifakator === 1) {
+        console.warn("Uh-oh, the mosaic is too high. We will scale it down and re-run it.", ohsumChecker, projectHeight);
+        multifakator = Math.floor(projectHeight / ohsumChecker * 10000000)/10000000;
+        ohsum = 0;
+        owsum = 0;
+        ohsumChecker = 0;
+        out = [];
+        preview.innerHTML = "";
+        preview2.innerHTML = "";
+        console.log("Multifakator: ", multifakator);
+        return(make(p)); // We suppose multifakator did its job, therefore we don't check if it exceeds the limit again
+    } else {    
+        console.groupEnd();
+        console.groupEnd();
+        return(out);
+    }
 }

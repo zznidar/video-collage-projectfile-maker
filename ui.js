@@ -1,4 +1,6 @@
 inputpicker = document.getElementById("inputpicker");
+preview = document.getElementById("preview");
+preview2 = document.getElementById("preview2");
 
 inputpicker.onchange = async function(e) {
     console.log("Changed.", e);
