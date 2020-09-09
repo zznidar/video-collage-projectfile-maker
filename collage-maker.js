@@ -175,7 +175,8 @@ function make(p, r) {
             preview.insertAdjacentHTML("beforeend", '<div style="border: 5px solid pink; width: '+img["width"]*scale+'px; height: '+img["height"]*scale+'px; position: relative; float: left; box-sizing: border-box"></div>');
         
             preview2.insertAdjacentHTML("beforeend", `<div style="border: 5px solid #${Math.min(999999, (Math.round(Math.random() * 1000000) + "111111").slice(0, 6))}; box-sizing: border-box; display: flex; justify-content: center; align-items: center; width: ${img["width"] * scale}px;height: ${img["height"] * scale}px;position: absolute; top: ${1080 / 2 - img["height"] * scale / 2}px; left: ${1920 / 2 - img["width"] * scale / 2}px;transform: translate(${iks}px, ${0 - ipsilon}px);">
-            <p style="font-family: Courier New; word-break: break-all; margin: 0 0 0 0; font-weight: bold; text-align: center; font-size: ${Math.min(img["height"]/2, img["width"] * scale / img["name"].length / 0.6 * 1.75)}px">${img["name"]}</p>
+            <p style="font-family: Courier New; word-break: break-all; margin: 0 0 0 0; font-weight: bold; text-align: center; color: #${hashColor(img["name"])}; 
+            font-size: ${Math.min(img["height"]/2, img["width"] * scale / img["name"].length / 0.6 * 1.75)}px">${img["name"]}</p>
             </div>`); // We calculate font size: widthOfDiv / noOfChars / (fontRatioWidthHeight=0.6 for Courier New), then we multiply that by 1.75 so it spreads over two or three lines
             
             if(owsum == 0) { // we do this here to see if mosaic becomes too high

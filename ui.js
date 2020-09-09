@@ -24,3 +24,21 @@ downloadbtn.onclick = function(e) {
 
     exportfile(out);
 }
+
+
+// https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
+Object.defineProperty(String.prototype, 'hashCode', {
+    value: function() {
+      var hash = 0, i, chr;
+      for (i = 0; i < this.length; i++) {
+        chr   = this.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+      }
+      return Math.abs(hash);
+    }
+  });
+
+function hashColor(s) {
+    return (s.hashCode().toString(16) + "111111").slice(0, 6);
+}
