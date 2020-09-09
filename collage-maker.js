@@ -184,7 +184,7 @@ function make(p, r) {
             console.log(owsum, ohsum);
 
             // We check if end of line is reached AFTER pushing so we can add current video height to ohsum
-            if(owsum >= projectWidth) {
+            if(owsum*1.005 >= projectWidth) { // We multiply a little to cancel out any rounding errors
                 owsum = 0;
                 ohsum += newHeight;
             }
