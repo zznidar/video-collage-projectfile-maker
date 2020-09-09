@@ -10,7 +10,18 @@
 <body>
     <label for="inputfile">Choose a .fcpxml file of your timeline:</label>
     <input type="file" id="inputpicker" name="inputfile" accept=".fcpxml">
-    
+
+    <br>
+
+    <label for="rowssetting">How many rows should your collage have? (Set 0 for auto)</label>
+    <input type="number" id="rowssetting" name="rowssetting" min="0" value="0" placeholder="Number of rows (0 = auto)">
+
+    <br><br>
+
+    <label for="downloadbtn">Are you satisfied with the preview?</label>
+    <button type="button" id="downloadbtn" name="downloadbtn">Download .fcpxml file!</button> 
+
+    <br><br>
     
     <div id="preview2" style="width: 1920px;height: 1080px;border: 5px solid black;position: relative;">
         <!-- <div style="border: 5px solid #711525;width: 820.2530879999999px;height: 461.392362px;position: relative;position: absolute;left: 550px;top: 310px;transform: translate(-410px, -309px);"></div> -->

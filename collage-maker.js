@@ -90,7 +90,7 @@ function linear_partition(seq, k) {
 multifakator = 1; // Should mosaic be too high, automatically reduce multifakator and run again. 
 
 // https://stackoverflow.com/questions/31712363/linear-partitioning-perfect-image-gallery
-function make(p) {
+function make(p, r) {
     console.log("************************ BEGIN ***************************");
     console.group(new Date().getTime());
     
@@ -103,6 +103,8 @@ function make(p) {
     ohsum = 0; // summing height for positioning
     owsum = 0; // summing width to know when to go to a new line
     ohsumChecker = 0; // same as above, but we add to it on start of each line; used to check if mosaic is too high
+    preview.innerHTML = ""; // We clear the preview
+    preview2.innerHTML = ""; // We clear the better preview
 
     for (slika of p)
     {
@@ -118,8 +120,8 @@ function make(p) {
     {
         return sum += img['aspect-ratio'] * ideal_height;
     }, 0);
-    var rows = Math.round( summed_width / viewport );
-    //rows = 3;
+    var rows = r || Math.round( summed_width / viewport ); // If user sets to 0 rows, auto calculate them
+    console.log("Rows: ", rows);
 
     var weights = photos.map(function (img) {
         return parseInt(img['aspect-ratio'] * 100);
@@ -196,17 +198,13 @@ function make(p) {
         // The mosaic came out too high to fit on the screen. Scale-to-fit it down and align to center in the upcoming run
         console.warn("Uh-oh, the mosaic is too high. We will scale it down and re-run it.", ohsumChecker, projectHeight);
         multifakator = Math.floor(projectHeight / ohsumChecker * 10000000)/10000000;
-        ohsum = 0;
-        owsum = 0;
-        ohsumChecker = 0;
-        out = [];
-        preview.innerHTML = "";
-        preview2.innerHTML = "";
+        /* Variables and previews are cleared at the beginning of the function */
         console.log("Multifakator: ", multifakator);
-        return(make(p)); // We suppose multifakator did its job, therefore we don't check if it exceeds the limit again
+        return(make(p, r)); // We suppose multifakator did its job, therefore we don't check if it exceeds the limit again
     } else {    
         console.groupEnd();
         console.groupEnd();
+        multifakator = 1; // We reset multifakator so it is ready for new calculations (if user changes rows)
         return(out);
     }
 }
