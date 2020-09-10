@@ -38,7 +38,9 @@ shufflebtn.onclick = function(e) {
 window.addEventListener("resize", resize);
 
 function resize() {
-    pscale = Math.min(document.documentElement.clientWidth/projectWidth, document.documentElement.clientHeight*0.9/projectHeight)*0.85; // size/scale of Preview
+    preview2.style.width = `${projectWidth}px`;
+    preview2.style.height = `${projectHeight}px`;
+    pscale = Math.min(1, document.documentElement.clientWidth/projectWidth, document.documentElement.clientHeight*0.9/projectHeight)*0.85; // size/scale of Preview
     preview2.style.transform = `scale(${pscale}, ${pscale})`;
 }
 
