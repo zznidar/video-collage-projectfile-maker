@@ -2,6 +2,7 @@ inputpicker = document.getElementById("inputpicker");
 rowssetting = document.getElementById("rowssetting");
 downloadbtn = document.getElementById("downloadbtn");
 shufflebtn = document.getElementById("shufflebtn");
+previewscale = document.getElementById("previewscale");
 preview = document.getElementById("preview");
 preview2 = document.getElementById("preview2");
 
@@ -29,6 +30,12 @@ downloadbtn.onclick = function(e) {
 shufflebtn.onclick = function(e) {
     console.log("Wanna shuffle!", e);
     make(shuffle(p), parseInt(rowssetting.value));
+}
+
+previewscale.onchange = function(e) {
+    console.log("Changing preview scale", e);
+
+    preview2.style.transform = `scale(${previewscale.value/100}, ${previewscale.value/100})`;
 }
 
 

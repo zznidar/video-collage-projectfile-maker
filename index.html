@@ -21,12 +21,15 @@
 
     <br><br>
 
+    <label for="previewscale">Resize preview to fit your screen:</label>
+    <input type="number" id="previewscale" name="previewscale" min="1" max="100" value="50" placeholder="Preview size [%]">
+
     <label for="downloadbtn">Are you satisfied with the preview?</label>
     <button type="button" id="downloadbtn" name="downloadbtn">Download .fcpxml file!</button> 
 
     <br><br>
     
-    <div id="preview2" style="width: 1920px;height: 1080px;border: 5px solid black;position: relative;">
+    <div id="preview2" style="width: 1920px;height: 1080px;border: 5px solid black;position: relative; transform-origin: top left; transform: scale(0.5, 0.5);">
         <!-- <div style="border: 5px solid #711525;width: 820.2530879999999px;height: 461.392362px;position: relative;position: absolute;left: 550px;top: 310px;transform: translate(-410px, -309px);"></div> -->
     </div>
     
