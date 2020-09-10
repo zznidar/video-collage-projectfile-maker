@@ -5,7 +5,7 @@ function exportfile(out) {
         position = o["position"];
         scale = o["scale"];
 
-        nodij = xmlDoc.evaluate("//clip[@name='" + name + "']", xmlDoc, null, XPathResult.ANY_TYPE,null).iterateNext().getElementsByTagName("adjust-transform")[0];
+        nodij = xmlDoc.evaluate("//clip[@name='" + name + "']", xmlDoc, null, XPathResult.ANY_TYPE,null).iterateNext()?.getElementsByTagName("adjust-transform")[0] || xmlDoc.evaluate("//video[@name='" + name + "']", xmlDoc, null, XPathResult.ANY_TYPE,null).iterateNext().getElementsByTagName("adjust-transform")[0]
 
         nodij.getAttributeNode("position").value = position;
         nodij.getAttributeNode("scale").value = scale;
