@@ -9,9 +9,7 @@ inputpicker.onchange = async function(e) {
     console.log("Changed.", e);
     
     out = make(await parse(), parseInt(rowssetting.value));
-    // Show some pretty/fancy graphics with how it would be arranged on screen
-    
-    //exportfile(out); // do this only after user confirms with a button -- they might want to change settings first (number of rows) ...
+    resize(); // Auto resize preview to fit on screen
 }
 
 rowssetting.onchange = async function(e) {
@@ -31,10 +29,17 @@ shufflebtn.onclick = function(e) {
     make(shuffle(p), parseInt(rowssetting.value));
 }
 
-previewscale.onchange = function(e) {
+/* previewscale.onchange = function(e) {
     console.log("Changing preview scale", e);
 
     preview2.style.transform = `scale(${previewscale.value/100}, ${previewscale.value/100})`;
+} */
+
+window.addEventListener("resize", resize);
+
+function resize() {
+    pscale = Math.min(document.documentElement.clientWidth/projectWidth, document.documentElement.clientHeight*0.9/projectHeight)*0.85; // size/scale of Preview
+    preview2.style.transform = `scale(${pscale}, ${pscale})`;
 }
 
 
