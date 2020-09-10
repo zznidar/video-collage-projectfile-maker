@@ -1,6 +1,7 @@
 inputpicker = document.getElementById("inputpicker");
 rowssetting = document.getElementById("rowssetting");
 downloadbtn = document.getElementById("downloadbtn");
+shufflebtn = document.getElementById("shufflebtn");
 preview = document.getElementById("preview");
 preview2 = document.getElementById("preview2");
 
@@ -25,6 +26,12 @@ downloadbtn.onclick = function(e) {
     exportfile(out);
 }
 
+shufflebtn.onclick = function(e) {
+    console.log("Wanna shuffle!", e);
+    make(shuffle(p), parseInt(rowssetting.value));
+}
+
+
 
 // https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
 Object.defineProperty(String.prototype, 'hashCode', {
@@ -42,3 +49,9 @@ Object.defineProperty(String.prototype, 'hashCode', {
 function hashColor(s) {
     return (s.hashCode().toString(16) + "111111").slice(0, 6);
 }
+
+// https://javascript.info/task/shuffle (if needed, use 2nd approach = Fisher-Yates Algorithm)
+function shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
+    return(array);
+  }
