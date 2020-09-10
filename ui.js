@@ -3,7 +3,6 @@ rowssetting = document.getElementById("rowssetting");
 downloadbtn = document.getElementById("downloadbtn");
 shufflebtn = document.getElementById("shufflebtn");
 previewscale = document.getElementById("previewscale");
-preview = document.getElementById("preview");
 preview2 = document.getElementById("preview2");
 
 inputpicker.onchange = async function(e) {

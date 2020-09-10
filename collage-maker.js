@@ -103,7 +103,6 @@ function make(p, r) {
     ohsum = 0; // summing height for positioning
     owsum = 0; // summing width to know when to go to a new line
     ohsumChecker = 0; // same as above, but we add to it on start of each line; used to check if mosaic is too high
-    preview.innerHTML = ""; // We clear the preview
     preview2.innerHTML = ""; // We clear the better preview
 
     for (slika of p)
@@ -171,8 +170,6 @@ function make(p, r) {
             console.log("Position posY: ", posY = (100 * ipsilon / projectHeight));
             
             out.push({"name": img["name"], "scale": (newScale + " " + newScale), "position": (posX + " " + posY)});
-        
-            preview.insertAdjacentHTML("beforeend", '<div style="border: 5px solid pink; width: '+img["width"]*scale+'px; height: '+img["height"]*scale+'px; position: relative; float: left; box-sizing: border-box"></div>');
         
             preview2.insertAdjacentHTML("beforeend", `<div style="border: 5px solid #${Math.min(999999, (Math.round(Math.random() * 1000000) + "111111").slice(0, 6))}; box-sizing: border-box; display: flex; justify-content: center; align-items: center; width: ${img["width"] * scale}px;height: ${img["height"] * scale}px;position: absolute; top: ${1080 / 2 - img["height"] * scale / 2}px; left: ${1920 / 2 - img["width"] * scale / 2}px;transform: translate(${iks}px, ${0 - ipsilon}px);">
             <p style="font-family: Courier New; word-break: break-all; margin: 0 0 0 0; font-weight: bold; text-align: center; color: #${hashColor(img["name"])}; 
