@@ -96,8 +96,9 @@ function make(p, r) {
     
     p;
 
-    projectHeight = 1080; // All position values in DaVinci Resolve are relative multiplier of projectHeight (height of the timeline) /* This is documented here, anyway: https://developer.apple.com/library/archive/documentation/FinalCutProX/Reference/FinalCutProXXMLFormat/Adjustments/Adjustments.html#//apple_ref/doc/uid/TP40011227-CH14-SW16 */
-    projectWidth = 1920; // Needed for some calculations down there ...
+    // r0 is the format of the timeline
+    projectHeight = formati["r0"]["h"]; // All position values in DaVinci Resolve are relative multiplier of projectHeight (height of the timeline) /* This is documented here, anyway: https://developer.apple.com/library/archive/documentation/FinalCutProX/Reference/FinalCutProXXMLFormat/Adjustments/Adjustments.html#//apple_ref/doc/uid/TP40011227-CH14-SW16 */
+    projectWidth = formati["r0"]["w"]; // Needed for some calculations down there ...
     projectRatio = projectWidth / projectHeight; // Needed to figure out which axis is weird (percentages in xml file)
 
     out = []; // array of objects for each clip with data ready to be written into DaVinci Resolve xml file
