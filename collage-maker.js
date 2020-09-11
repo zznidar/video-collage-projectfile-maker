@@ -98,6 +98,7 @@ function make(p, r) {
 
     projectHeight = 1080; // All position values in DaVinci Resolve are relative multiplier of projectHeight (height of the timeline) /* This is documented here, anyway: https://developer.apple.com/library/archive/documentation/FinalCutProX/Reference/FinalCutProXXMLFormat/Adjustments/Adjustments.html#//apple_ref/doc/uid/TP40011227-CH14-SW16 */
     projectWidth = 1920; // Needed for some calculations down there ...
+    projectRatio = projectWidth / projectHeight; // Needed to figure out which axis is weird (percentages in xml file)
 
     out = []; // array of objects for each clip with data ready to be written into DaVinci Resolve xml file
     ohsum = 0; // summing height for positioning
@@ -151,8 +152,8 @@ function make(p, r) {
             console.log(newHeight = parseInt(viewport / summed_ratios));
             console.log("Scale: ", scale = newWidth/img["width"]);
 
-            // aber DaVinci Resolve sets scale based on timeline height. Therefore, we change that
-            console.log("newScale: ", newScale = (img["height"] * scale / projectHeight));
+            // aber DaVinci Resolve sets scale based on timeline height (not entirely true; see explanation below). Therefore, we change that
+            console.log("newScale: ", newScale = (img["aspect-ratio"] <= projectRatio ? img["height"] * scale / projectHeight : img["width"] * scale / (projectHeight * projectRatio)));
 
             // coordinates x and y as if origin were top-left, going towards down-right
             console.log("Position X: ", x = (owsum + newWidth/2));
@@ -165,10 +166,22 @@ function make(p, r) {
             console.log("Position ipsilon: ", ipsilon = (projectHeight/2 - y));
 
             // furthermore, DaVinci Resolve uses positions as percent based on projectHeight. That means, if projectHeight = 1080 and you set position in xml to "-100 100", the result will be -1080, 1080 (i. e. 1080 pixels left, 1080 pixels up)
-            //console.log("Position posX: ", posX = (100 * iks / projectHeight)); // For some reason, posX for vertical videos is wrong. (iks is okay -- same as in DaVinci program. But this percentage value as in XML file is wrong. Very wrong. Weird.)
-            console.log("Position posX: ", posX = (100 * iks / (projectHeight / (1920) * img["width"] / newScale * scale))); // We do some deep dark magic with a special formula which visually makes no sense but works
-            console.log("Position posY: ", posY = (100 * ipsilon / projectHeight));
-            
+            // However, documentation is unclear on what "original frame height" means. Obviously is this not height of each clip, nor height of the project. See below explanation.
+           
+            // Versuchen wir noch mal:
+            // if videoRatio > projectRatio: iks = projectHeight ... 100 %
+            //                               ipsilon = projectHeight*projectRatio/videoRatio ... 100 %
+            //
+            // if videoRatio < projectRatio: ipsilon = projectHeight ... 100 %
+            //                               iks = projectHeight*videoRatio/projectRatio ... 100 %
+            //
+            // if videoRatio == projectRatio: as documentation states (ipsilon, iks = projectHeight ... 100 %), but we can use either of the formulas above as the ratios cancel out.
+
+            console.log("Position new posX: ", posX = (img["aspect-ratio"] >= projectRatio ? 100*iks/projectHeight : 100*iks/(projectHeight * img["aspect-ratio"] / projectRatio)));
+            console.log("Position new posY: ", posY = (img["aspect-ratio"] >= projectRatio ? 100*ipsilon*img["aspect-ratio"]/(projectHeight*projectRatio) : 100*ipsilon/projectHeight));
+           
+           
+
             out.push({"name": img["name"], "scale": (newScale + " " + newScale), "position": (posX + " " + posY)});
         
             preview2.insertAdjacentHTML("beforeend", `<div style="border: 5px solid #${Math.min(999999, (Math.round(Math.random() * 1000000) + "111111").slice(0, 6))}; box-sizing: border-box; display: flex; justify-content: center; align-items: center; width: ${img["width"] * scale}px;height: ${img["height"] * scale}px;position: absolute; top: ${projectHeight / 2 - img["height"] * scale / 2}px; left: ${projectWidth / 2 - img["width"] * scale / 2}px;transform: translate(${iks}px, ${0 - ipsilon}px);">
