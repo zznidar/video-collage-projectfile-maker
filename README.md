@@ -6,7 +6,7 @@ Create .fcpxml timeline projectfiles for video collages which you can then lossl
 2. Add video clips on top of each other (static images work as well)
 3. `File` -> `Export AAF, XML...` (Ctrl + Shift + O)
 4. Select `FCPXML 1.5 Files (*.fcpxml)` as filetype (1.3 and 1.8 should work as well, others not tested)
-5. Visit (Video Collage Projectfile Maker)[https://zznidar.github.io/video-collage-projectfile-maker/]
+5. Visit [Video Collage Projectfile Maker](https://zznidar.github.io/video-collage-projectfile-maker/)
 6. Select your file from the file picker
 7. Observe the preview
 8. You can change the number of rows of your collage/mosaic
