@@ -55,7 +55,7 @@ function linear_partition(seq, k) {
             }
             min = Math.min.apply(this, list_of_maxes);
             m = list_of_pairs.reduce(function(previous, current) {
-                return current[0] < previous[0] ? current : previous;
+                return current[0] <= previous[0] ? current : previous;
             }, [Infinity]);
             table[i][j] = m[0];
             solution[i-1][j-1] = m[1];
