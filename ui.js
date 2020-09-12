@@ -7,6 +7,14 @@ preview2 = document.getElementById("preview2");
 
 inputpicker.onchange = async function(e) {
     console.log("Changed.", e);
+
+    // Feture detection
+    if(!inputpicker.files[0].text) {
+        // Browser does not support getting text from the file. 
+        // Probably it also doesn't support Optional Chaining (?.)
+        // Adding support for older workarounds would make our code messy. Show user a message.
+        alert("Your browser does not support the newest technologies needed for this website. Sorry about that.\nTry using a different and updated browser.");
+    }
     
     out = make(await parse(), parseInt(rowssetting.value));
     resize(); // Auto resize preview to fit on screen
