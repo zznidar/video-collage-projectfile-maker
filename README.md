@@ -21,5 +21,15 @@ Create .fcpxml timeline projectfiles for video collages which you can then lossl
 * Google Chrome 85.0.4183.83
 Other versions of DaVinci Resolve and web browsers may work as well. 
 
+## How is Video Collage Projectfile Maker different from other tools?
+Video Collage Projectfile Maker edits your DaVinci timeline projectfile directly. This comes with various advantages:
+* Your video collage can be a part of a larger video project without quality degradation
+* You can add filters and transitions to each clip individually, afterwards
+* **Privacy**: projectfile contains only dimensions and clip filenames. That means your videos are sent nowhere. Also, everything happens directly in your browser
+* The process of collage creation is fast as the computer only operates with numbers and not with actual videos
+* It's free, without any watermarks or hidden fees!
+
+
 ## Known issues
 * Does not work in Firefox ESR. Use Firefox Developer Edition or Chrome. Normal edition might work as well. 
+* Internet Explorer and Safari for Windows are not supported either.

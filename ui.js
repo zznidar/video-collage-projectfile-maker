@@ -8,7 +8,7 @@ preview2 = document.getElementById("preview2");
 inputpicker.onchange = async function(e) {
     console.log("Changed.", e);
 
-    // Feture detection
+    // Feature detection
     if(!inputpicker.files[0].text) {
         // Browser does not support getting text from the file. 
         // Probably it also doesn't support Optional Chaining (?.)
