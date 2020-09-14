@@ -76,3 +76,13 @@ function shuffle(array) {
     array.sort(() => Math.random() - 0.5);
     return(array);
   }
+
+
+// Some more feature detection
+try {
+    eval("[{}][0]?.test?.test");
+    document.getElementById("unsupported").remove();
+} catch(e) {
+    console.log("Browser does not support Optional Chaining (?.)", e);
+    document.getElementById("unsupported").innerHTML = "Your browser does not support the newest technologies needed for this website. Sorry about that.<br>Try using a different and updated browser.";
+}
