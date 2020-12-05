@@ -11,9 +11,10 @@ Create .fcpxml timeline projectfiles for video collages which you can then lossl
 7. Observe the preview
 8. You can change the number of rows of your collage/mosaic
 9. You can shuffle the clips if you want them in a different order
-10. Once satisfied, click the `Download` button
-11. Go back to DaVinci Resolve and click `File` -> `Import Timeline` -> `Import AAF, EDL, XML...` (Ctrl + Shift + I)
-12. Select the downloaded file, confirm settings and enjoy your newly created video collage!
+10. You can swap two clip tiles by clicking on them
+11. Once satisfied, click the `Download` button
+12. Go back to DaVinci Resolve and click `File` -> `Import Timeline` -> `Import AAF, EDL, XML...` (Ctrl + Shift + I)
+13. Select the downloaded file, confirm settings and enjoy your newly created video collage!
 
 ### Compatible/tested versions
 * Tested in DaVinci Resolve 15.3.0.008 

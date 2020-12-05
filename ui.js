@@ -37,6 +37,22 @@ shufflebtn.onclick = function(e) {
     make(shuffle(p), parseInt(rowssetting.value));
 }
 
+toSwap = [];
+function swapping(tile) {
+    tile.classList.toggle("selected");
+    toSwap.push(tile.getAttribute("data-order")); // Because we only have 2 elements in array, we can always push. If user deselects, simply recalculate the same with no difference. 
+
+    if(toSwap.length == 2) {
+        swap(...toSwap);
+        toSwap = [];
+    }
+}
+function swap(first, second) {
+    console.log("swapping ", first, second);
+    p.splice(first, 1, ...p.splice(second, 1, p[first]));
+    make(p, parseInt(rowssetting.value));
+}
+
 /* previewscale.onchange = function(e) {
     console.log("Changing preview scale", e);
 
