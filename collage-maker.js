@@ -112,12 +112,12 @@ function make(p, r) {
     {
         var h = slika.height;
         var w = slika.width;
-        slika['aspect-ratio'] = (w / h);
+        console.warn(slika['aspect-ratio'] = (w / h));
     }
 
     var photos = p;
     var viewport = projectWidth;
-    var ideal_height = parseInt( projectHeight / 2 );
+    var ideal_height = parseFloat( projectHeight / 2 );
     var summed_width = photos.reduce(function(sum, img)
     {
         return sum += img['aspect-ratio'] * ideal_height;
@@ -126,7 +126,7 @@ function make(p, r) {
     console.log("Rows: ", rows);
 
     var weights = photos.map(function (img) {
-        return parseInt(img['aspect-ratio'] * 100);
+        return parseFloat(img['aspect-ratio'] * 100); // Why don't we parseFloat here?
     });
     var partition = linear_partition(weights, rows);
 
@@ -150,8 +150,8 @@ function make(p, r) {
         {
             var img = row_buffer[j];
             console.log(img);
-            console.log(newWidth = parseInt(viewport / summed_ratios * img["aspect-ratio"]));
-            console.log(newHeight = parseInt(viewport / summed_ratios));
+            console.log(newWidth = parseFloat(viewport / summed_ratios * img["aspect-ratio"]));
+            console.log(newHeight = parseFloat(viewport / summed_ratios));
             console.log("Scale: ", scale = newWidth/img["width"]);
 
             // aber DaVinci Resolve sets scale based on timeline height (not entirely true; see explanation below). Therefore, we change that
