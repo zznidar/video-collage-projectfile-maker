@@ -112,7 +112,7 @@ function make(p, r) {
     {
         var h = slika.height;
         var w = slika.width;
-        console.warn(slika['aspect-ratio'] = (w / h));
+        slika['aspect-ratio'] = (w / h);
     }
 
     var photos = p;
